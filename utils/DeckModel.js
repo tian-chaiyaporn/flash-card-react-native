@@ -1,6 +1,7 @@
 import React from 'react'
+import { AsyncStorage } from 'react-native'
 
-const initialState = {
+export const initialDecks = {
   React: {
     title: 'React',
     questions: [
@@ -23,4 +24,24 @@ const initialState = {
       }
     ]
   }
+}
+
+export function addInitialData(data) {
+  return AsyncStorage.setItem('decks', JSON.stringify(data))
+    .then(() => {return getAllDecks()})
+}
+
+export function removeAllDecks() {
+  return AsyncStorage.removeItem('decks')
+}
+
+export function getAllDecks() {
+  return AsyncStorage.getItem('decks')
+    .then((payload) => {
+      if (!payload) {
+        return 'no data'
+      }
+      return JSON.parse(payload)
+    })
+    .catch((err) => {return err})
 }
