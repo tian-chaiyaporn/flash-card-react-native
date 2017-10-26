@@ -31,6 +31,21 @@ export function addInitialData(data) {
     .then(() => {return getAllDecks()})
 }
 
+export function addNewDeck(title) {
+  return getAllDecks()
+    .then(payload => {
+      return AsyncStorage.setItem('decks',
+        JSON.stringify(Object.assign({}, payload, {
+            [title]: {
+              questions: [],
+              title: title
+            }
+          })
+        )
+      )
+    })
+}
+
 export function removeAllDecks() {
   return AsyncStorage.removeItem('decks')
 }
