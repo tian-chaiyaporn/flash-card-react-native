@@ -3,7 +3,10 @@ import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
 import DeckList from './containers/DeckList'
+import DeckView from './containers/DeckView'
 import NewDeckView from './containers/NewDeckView'
+import NewQuestionView from './containers/NewQuestionView'
+import QuizView from './containers/QuizView'
 
 const Tabs = TabNavigator({
     DeckList: {
@@ -41,6 +44,15 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
+  },
+  DeckView: {
+    screen: DeckView
+  },
+  NewQuestionView: {
+    screen: NewQuestionView
+  },
+  QuizView: {
+    screen: QuizView
   }
 })
 
@@ -52,7 +64,6 @@ export default class App extends React.Component {
           <StatusBar translucent backgroundColor={'#000'} barStyle="light-content"/>
         </View>
         <MainNavigator />
-        {/* <Tabs /> */}
       </View>
     );
   }

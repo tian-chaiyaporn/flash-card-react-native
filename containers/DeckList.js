@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import * as DeckModel from '../utils/DeckModel'
 
 class DeckList extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      decks: {}
-    }
+    this.state = { decks: {} }
+    this.renderDeckItem = this.renderDeckItem.bind(this)
   }
 
   componentDidMount() {
@@ -24,9 +23,16 @@ class DeckList extends Component {
 
   renderDeckItem(obj) {
     return (
-      <View style={styles.item}>
-        <Text>{obj.item}</Text>
-      </View>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate(
+            'DeckView',
+            { title: obj.item }
+          )}
+        >
+          <View style={styles.item}>
+            <Text>{obj.item}</Text>
+          </View>
+        </TouchableOpacity>
     )
   }
 
