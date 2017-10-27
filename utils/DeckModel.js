@@ -73,3 +73,18 @@ export function getAllDecks() {
     })
     .catch((err) => {return err})
 }
+
+export function getDeck(title) {
+  return AsyncStorage.getItem('decks')
+    .then((payload) => {
+      if (!payload) {
+        return 'no data'
+      }
+      const data = JSON.parse(payload)
+      if (!data[title]) {
+        return 'no Deck information'
+      }
+      return data[title]
+    })
+    .catch((err) => {return err})
+}

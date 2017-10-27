@@ -16,7 +16,6 @@ class DeckList extends Component {
           DeckModel.addInitialData(DeckModel.initialDecks)
             .then(data => this.setState({decks: data}));
         } else {
-          console.log(payload)
           this.setState({decks: payload})
         }
       })
