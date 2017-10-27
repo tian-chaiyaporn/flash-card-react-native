@@ -5,7 +5,7 @@ class DeckView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>DeckView Page</Text>
+        <Text>DeckView Page  {this.props.navigation.state.params.title}</Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate(
             'QuizView',

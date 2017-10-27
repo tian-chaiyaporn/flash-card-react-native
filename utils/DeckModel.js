@@ -46,6 +46,19 @@ export function addNewDeck(title) {
     })
 }
 
+export function addNewQuestion(title, question, answer) {
+  return getAllDecks()
+    .then(payload => {
+      payload[title].questions.push({
+        question: question,
+        answer: answer
+      })
+      return AsyncStorage.setItem('decks',
+        JSON.stringify(payload)
+      )
+    })
+}
+
 export function removeAllDecks() {
   return AsyncStorage.removeItem('decks')
 }
