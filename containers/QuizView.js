@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as DeckModel from '../utils/DeckModel'
+import * as Notification from '../utils/Notification'
 
 class QuizView extends Component {
   constructor(props) {
@@ -27,6 +28,10 @@ class QuizView extends Component {
         }))
         .catch(err => err)
       )
+  }
+
+  componentDidUpdate() {
+    this.state.showFinalScore && (Notification.clearLocalNotification())
   }
 
   render() {

@@ -7,6 +7,7 @@ import DeckView from './containers/DeckView'
 import NewDeckView from './containers/NewDeckView'
 import NewQuestionView from './containers/NewQuestionView'
 import QuizView from './containers/QuizView'
+import * as Notification from './utils/Notification'
 
 const Tabs = TabNavigator({
     DeckList: {
@@ -57,6 +58,10 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+  componentDidMount() {
+    Notification.setLocalNotification()
+  }
+
   render() {
     return (
       <View style={styles.container}>

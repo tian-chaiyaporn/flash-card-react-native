@@ -33,11 +33,12 @@ class DeckList extends Component {
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate(
             'DeckView',
-            { title: obj.item }
+            { title: obj.item.title }
           )}
         >
           <View style={styles.item}>
-            <Text>{obj.item}</Text>
+            <Text style={styles.titleText}>{obj.item.title}</Text>
+            <Text style={styles.subtitleText}>{`${obj.item.questions.length} cards`}</Text>
           </View>
         </TouchableOpacity>
     )
@@ -47,15 +48,14 @@ class DeckList extends Component {
     const items = []
     const data = this.state.decks
     for (const key in data) {
-      items.push(data[key].title)
+      items.push(data[key])
     }
     return (
       <View style={styles.container}>
-        <Text>DeckList Page</Text>
         <FlatList
           data={items}
           renderItem={this.renderDeckItem}
-          keyExtractor={item => item}
+          keyExtractor={item => item.title}
         />
       </View>
     )
@@ -68,13 +68,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   item: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 150,
     borderWidth: 0.5,
     borderColor: '#000',
     backgroundColor: '#eee'
+  },
+  titleText: {
+    fontSize: 22
+  },
+  subtitleText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: '#555'
   }
 });
 
