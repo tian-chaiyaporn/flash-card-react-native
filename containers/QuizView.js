@@ -19,6 +19,10 @@ class QuizView extends Component {
     }
   }
 
+  static navigationOptions = {
+    title: 'Quiz'
+  }
+
   componentDidMount() {
     this.props.navigation.state.params.title && (
       DeckModel.getDeck(this.props.navigation.state.params.title)
@@ -36,8 +40,8 @@ class QuizView extends Component {
 
   render() {
     const mainView = !this.state.flip
-    ? <Text>{this.state.questions[this.state.questionIndex].question}</Text>
-    : <Text>{this.state.questions[this.state.questionIndex].answer}</Text>
+    ? <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].question}</Text>
+    : <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].answer}</Text>
 
     return this.state.showFinalScore
       ? (
@@ -47,45 +51,46 @@ class QuizView extends Component {
         )
       : (
           <View style={styles.container}>
-            <Text>QuizView Page {this.props.navigation.state.params.title}</Text>
+            <View style={[styles.halfView, {flex: 2}]}>
+              {mainView}
+              <TouchableOpacity onPress={ () => this.setState((state) => {return {flip: !state.flip}}) }>
+                <View style={styles.button}>
+                  <Text style={{color: '#AD1457', zIndex: 1000}}>FLIP CARD</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
 
-            {mainView}
+            <View style={styles.halfView}>
+              <TouchableOpacity
+                onPress={() => {
+                  this.state.flip === true && this.setState({flip: false})
+                  this.setState((state) => {
+                    return (state.questionIndex + 1 === state.totalScore)
+                    ? {score: state.score + 1, showFinalScore: true}
+                    : {score: state.score + 1, questionIndex: state.questionIndex + 1}
+                  })
+                }}
+              >
+                <View style={[styles.button, {backgroundColor: '#009688'}]}>
+                  <Text style={{color: '#FFF'}}>CORRECT</Text>
+                </View>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => {
-                this.state.flip === true && this.setState({flip: false})
-                this.setState((state) => {
-                  return (state.questionIndex + 1 === state.totalScore)
-                  ? {score: state.score + 1, showFinalScore: true}
-                  : {score: state.score + 1, questionIndex: state.questionIndex + 1}
-                })
-              }}
-            >
-              <View style={styles.button}>
-                <Text>CORRECT</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.state.flip === true && this.setState({flip: false})
-                this.setState((state) => {
-                  return (state.questionIndex + 1 === state.totalScore)
-                  ? {showFinalScore: true}
-                  : {questionIndex: state.questionIndex + 1}
-                })
-              }}
-            >
-              <View style={styles.button}>
-                <Text>INCORRECT</Text>
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={ () => this.setState((state) => {return {flip: !state.flip}}) }>
-              <View style={styles.button}>
-                <Text>FLIP CARD</Text>
-              </View>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  this.state.flip === true && this.setState({flip: false})
+                  this.setState((state) => {
+                    return (state.questionIndex + 1 === state.totalScore)
+                    ? {showFinalScore: true}
+                    : {questionIndex: state.questionIndex + 1}
+                  })
+                }}
+              >
+                <View style={[styles.button, {backgroundColor: '#AD1457'}]}>
+                  <Text style={{color: '#FFF'}}>INCORRECT</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         )
   }
@@ -96,12 +101,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  halfView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardText: {
+    textAlign: 'center',
+    fontSize: 25,
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginBottom: 10
+  },
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#eee',
-    width: 100,
-    height: 50
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: '#000',
+    width: 150,
+    height: 40,
+    marginBottom: 10
   }
 });
 
