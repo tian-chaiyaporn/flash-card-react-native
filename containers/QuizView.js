@@ -46,7 +46,9 @@ class QuizView extends Component {
     return this.state.showFinalScore
       ? (
           <View style={styles.container}>
-            <Text>{`${this.state.score}/${this.state.totalScore}`}</Text>
+            <Text style={{fontSize: 40, color: '#AD1457', padding: 30, textAlign: 'center'}}>
+              {`You've got ${this.state.score}/${this.state.totalScore} correct!`}
+            </Text>
           </View>
         )
       : (
@@ -99,6 +101,8 @@ class QuizView extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#fff',
   },
   halfView: {
