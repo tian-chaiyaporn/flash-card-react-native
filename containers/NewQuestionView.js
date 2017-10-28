@@ -22,11 +22,21 @@ class NewQuestionView extends Component {
     this.submitQuestion = this.submitQuestion.bind(this)
   }
 
+  static navigationOptions = {
+    title: 'Add Card'
+  }
+
   addNewQuestion(value) {
+    if (value.length > 100) {
+      return
+    }
     this.setState({question: value})
   }
 
   addNewAnswer(value) {
+    if (value.length > 100) {
+      return
+    }
     this.setState({answer: value})
   }
 

@@ -12,6 +12,9 @@ class NewDeckView extends Component {
   }
 
   addNewDeck(value) {
+    if (value.length > 30) {
+      return
+    }
     this.setState({title: value})
   }
 
