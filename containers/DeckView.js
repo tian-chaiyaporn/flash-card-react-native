@@ -1,16 +1,29 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 import * as DeckModel from '../utils/DeckModel'
 
 class DeckView extends Component {
   constructor(props) {
     super(props)
-    this.state = {cards: 0}
+    this.state = {
+      cards: 0,
+      refreshState: false
+    }
   }
 
-  static navigationOptions = {
-    title: 'Deck View'
-  }
+  static navigationOptions = ({ navigation, screenProps }) => (
+    {
+      title: 'Deck View',
+      headerLeft: navigation.state.params.refresh &&
+        <Ionicons
+          onPress={() => navigation.navigate('Home')}
+          style={{marginLeft: 13}}
+          name={Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back'}
+          size={Platform.OS === 'ios' ? 30 : 23}
+        />,
+    }
+  )
 
   componentDidMount() {
     DeckModel.getDeck(this.props.navigation.state.params.title)

@@ -47,11 +47,21 @@ class NewQuestionView extends Component {
 
     const navigateAction = NavigationActions.navigate({
       routeName: 'DeckView',
-      params: {title: title}
+      params: {title: title, refresh: true}
     })
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'DeckView',
+          params: {title: title, refresh: true}
+        })
+      ]
+    })
+
     DeckModel.addNewQuestion(title, question, answer)
       .then(() => {
-        this.props.navigation.dispatch(navigateAction)
+        this.props.navigation.dispatch(resetAction)
       })
   }
 
