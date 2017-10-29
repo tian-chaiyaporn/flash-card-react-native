@@ -45,10 +45,6 @@ class NewQuestionView extends Component {
       return
     }
 
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'DeckView',
-      params: {title: title, refresh: true}
-    })
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
