@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as DeckModel from '../utils/DeckModel'
 import * as Notification from '../utils/Notification'
+import { NavigationActions } from 'react-navigation'
 
 class QuizView extends Component {
   constructor(props) {
@@ -55,6 +56,26 @@ class QuizView extends Component {
             <Text style={{fontSize: 40, color: '#AD1457', padding: 30, textAlign: 'center'}}>
               {`You've got ${this.state.score}/${this.state.totalScore} correct!`}
             </Text>
+            <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+              <View style={[styles.button, {backgroundColor: '#009688'}]}>
+                <Text style={{color: '#FFF'}}>FINISH</Text>
+              </View>
+            </TouchableOpacity><TouchableOpacity onPress={() => {
+              const resetAction = NavigationActions.reset({
+                index: 0,
+                actions: [
+                  NavigationActions.navigate({
+                    routeName: 'QuizView',
+                    params: {title: this.props.navigation.state.params.title}
+                  })
+                ]
+              })
+              this.props.navigation.dispatch(resetAction)
+            }}>
+              <View style={[styles.button, {backgroundColor: '#AD1457'}]}>
+                <Text style={{color: '#FFF'}}>RESTART</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         )
       : (
