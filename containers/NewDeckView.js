@@ -22,14 +22,20 @@ class NewDeckView extends Component {
     if (data === '') {
       return
     }
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'Home',
-      params: {title: data},
-      action: this.setState({refresh: true})
+    
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({
+          routeName: 'DeckView',
+          params: {title: data, refresh: true}
+        })
+      ]
     })
+
     DeckModel.addNewDeck(data)
       .then(() => {
-        this.props.navigation.dispatch(navigateAction)
+        this.props.navigation.dispatch(resetAction)
       })
   }
 
