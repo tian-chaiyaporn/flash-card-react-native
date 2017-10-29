@@ -13,8 +13,8 @@ class QuizView extends Component {
       score: 0,
       totalScore: 0,
       questions: [{
-        question: 'initial',
-        answer: 'initial'
+        question: 'please add your card first',
+        answer: 'you can go back to do it'
       }]
     }
   }
@@ -26,6 +26,12 @@ class QuizView extends Component {
   componentDidMount() {
     this.props.navigation.state.params.title && (
       DeckModel.getDeck(this.props.navigation.state.params.title)
+        .then(payload => {
+          if (payload.questions.length === 0) {
+            return this.state.questions
+          }
+          return payload
+        })
         .then(payload => this.setState({
           questions: payload.questions,
           totalScore: payload.questions.length
@@ -64,6 +70,7 @@ class QuizView extends Component {
 
             <View style={styles.halfView}>
               <TouchableOpacity
+                disabled={this.state.totalScore === 0 ? true : false}
                 onPress={() => {
                   this.state.flip === true && this.setState({flip: false})
                   this.setState((state) => {
@@ -79,6 +86,7 @@ class QuizView extends Component {
               </TouchableOpacity>
 
               <TouchableOpacity
+                disabled={this.state.totalScore === 0 ? true : false}
                 onPress={() => {
                   this.state.flip === true && this.setState({flip: false})
                   this.setState((state) => {
