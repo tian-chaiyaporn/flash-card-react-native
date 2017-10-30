@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import * as DeckModel from '../utils/DeckModel'
 import * as Notification from '../utils/Notification'
 import { NavigationActions } from 'react-navigation'
+import FlipCard from 'react-native-flip-card'
 
 class QuizView extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      flip: false,
       showFinalScore: false,
       questionIndex: 0,
       score: 0,
@@ -46,9 +46,24 @@ class QuizView extends Component {
   }
 
   render() {
-    const mainView = !this.state.flip
-    ? <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].question}</Text>
-    : <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].answer}</Text>
+    const mainView = (
+        <FlipCard
+          style={{maxHeight: 200, width: 280, borderWidth: 0}}
+          friction={6}
+          perspective={1000}
+          flipHorizontal={true}
+          flipVertical={false}
+          flip={false}
+          clickable={true}
+        >
+          <View style={{flex: 1, justifyContent: 'center', backgroundColor: '#009688'}}>
+            <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].question}</Text>
+          </View>
+          <View style={{flex: 1, justifyContent: 'center', backgroundColor: '#AD1457'}}>
+            <Text style={styles.cardText}>{this.state.questions[this.state.questionIndex].answer}</Text>
+          </View>
+        </FlipCard>
+      )
 
     return this.state.showFinalScore
       ? (
@@ -74,18 +89,12 @@ class QuizView extends Component {
             <Text style={{height: 20, marginTop: 15}}>{`${this.state.score}/${this.state.totalScore}`}</Text>
             <View style={[styles.halfView, {flex: 2}]}>
               {mainView}
-              <TouchableOpacity onPress={ () => this.setState((state) => {return {flip: !state.flip}}) }>
-                <View style={styles.button}>
-                  <Text style={{color: '#AD1457', zIndex: 1000}}>FLIP CARD</Text>
-                </View>
-              </TouchableOpacity>
             </View>
 
             <View style={styles.halfView}>
               <TouchableOpacity
                 disabled={this.state.totalScore === 0 ? true : false}
                 onPress={() => {
-                  this.state.flip === true && this.setState({flip: false})
                   this.setState((state) => {
                     return (state.questionIndex + 1 === state.totalScore)
                     ? {score: state.score + 1, showFinalScore: true}
@@ -101,7 +110,6 @@ class QuizView extends Component {
               <TouchableOpacity
                 disabled={this.state.totalScore === 0 ? true : false}
                 onPress={() => {
-                  this.state.flip === true && this.setState({flip: false})
                   this.setState((state) => {
                     return (state.questionIndex + 1 === state.totalScore)
                     ? {showFinalScore: true}
@@ -133,10 +141,11 @@ const styles = StyleSheet.create({
   },
   cardText: {
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 23,
     paddingLeft: 30,
     paddingRight: 30,
-    marginBottom: 10
+    marginBottom: 10,
+    color: '#FFF'
   },
   button: {
     justifyContent: 'center',
