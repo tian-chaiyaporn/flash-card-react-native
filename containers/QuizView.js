@@ -61,16 +61,7 @@ class QuizView extends Component {
                 <Text style={{color: '#FFF'}}>FINISH</Text>
               </View>
             </TouchableOpacity><TouchableOpacity onPress={() => {
-              const resetAction = NavigationActions.reset({
-                index: 0,
-                actions: [
-                  NavigationActions.navigate({
-                    routeName: 'QuizView',
-                    params: {title: this.props.navigation.state.params.title}
-                  })
-                ]
-              })
-              this.props.navigation.dispatch(resetAction)
+              this.setState({ showFinalScore: false, questionIndex: 0, score: 0 })
             }}>
               <View style={[styles.button, {backgroundColor: '#AD1457'}]}>
                 <Text style={{color: '#FFF'}}>RESTART</Text>
@@ -80,6 +71,7 @@ class QuizView extends Component {
         )
       : (
           <View style={styles.container}>
+            <Text style={{height: 20, marginTop: 15}}>{`${this.state.score}/${this.state.totalScore}`}</Text>
             <View style={[styles.halfView, {flex: 2}]}>
               {mainView}
               <TouchableOpacity onPress={ () => this.setState((state) => {return {flip: !state.flip}}) }>
