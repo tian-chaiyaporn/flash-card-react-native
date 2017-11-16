@@ -1,6 +1,6 @@
-# Readable API Server
+# Flash Card React Native
 
-This is the completed project for the final assessment project for Udacity's React Native course. It is a FlashCard app where users can add collections of cards, and quiz themselves with the app.
+This is the completed project for the final assessment project for Udacity's React Native course. It is a FlashCard app where users can add collections of cards, and quiz themselves with the app. The design was specified by Udacity, all code was written by myself.
 
 ## Start Developing
 To get started:
