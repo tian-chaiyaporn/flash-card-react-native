@@ -9,11 +9,11 @@ To get started:
     - `yarn install`
     - `yarn start`
 
-* To open it in and android simulator, make sure you have the XCode emulator installed, and use the following command:
+* To open it in an iOS simulator, make sure you have the XCode emulator installed, and use the following command:
     - `i`
     - or `react-native-scripts ios`
 
-* To open it in and android simulator, make sure you have the emulator installed and open (note that the emulator must be opened before, it will not open automatically like ios emulator), and use the following command:
+* To open it in an android simulator, make sure you have android emulator installed and open (note that the emulator must be opened before, it will not open automatically like iOS emulator), and use the following command:
     - `a`
     - or `react-native-scripts android`
 
